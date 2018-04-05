@@ -20,7 +20,11 @@ module CocoapodsMangle
         builder = Builder.new(@context.pods_project_path, @context.pod_target_labels)
         builder.build!
 
-        defines = Defines.mangling_defines(@context.mangle_prefix, builder.binaries_to_mangle)
+        
+        binaries = builder.binaries_to_mangle
+        binaries = binaries.find_all{|r| @context.pod_labels.any? { |word| r.include? word } } if @context.pod_labels.size > 0
+
+        defines = Defines.mangling_defines(@context.mangle_prefix, binaries)
 
         contents = <<~MANGLE_XCCONFIG
           // This config file is automatically generated any time Podfile.lock changes
