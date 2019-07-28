@@ -37,6 +37,10 @@ module CocoapodsMangle
     def pod_target_labels
       umbrella_pod_targets.map(&:cocoapods_target_label)
     end
+    
+    def pod_labels
+      @options[:pods] ? @options[:pods] : []
+    end
 
     # @return [Array<String>] Paths to all pod xcconfig files which should be updated
     def pod_xcconfig_paths
