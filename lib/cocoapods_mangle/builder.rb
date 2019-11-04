@@ -34,7 +34,7 @@ module CocoapodsMangle
 
     def build_target(target)
       Pod::UI.message "- Building '#{target}'"
-      output = `xcodebuild -project "#{@pods_project_path}" -target "#{target}" -configuration Release -sdk iphonesimulator build 2>&1`
+      output = `xcodebuild -project "#{@pods_project_path}" -target "#{target}" -UseModernBuildSystem=NO -configuration Release -sdk iphonesimulator build 2>&1`
       unless $?.success?
         raise "error: Building the Pods target '#{target}' failed.\ This is the build log:\n#{output}"
       end
